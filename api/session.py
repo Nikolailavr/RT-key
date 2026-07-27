@@ -43,6 +43,21 @@ class RTKeySession:
 
         return datetime.now(UTC) >= self.expires_at
 
+    @property
+    def headers(self) -> dict[str, str]:
+        """Common authorization headers."""
+
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "x-device-id": self.device_id,
+        }
+
+        if self.access_token:
+            headers["Authorization"] = self.authorization
+
+        return headers
+
     def update(
         self,
         token: str,
