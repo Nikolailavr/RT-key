@@ -1,38 +1,41 @@
 """
-Authentication API for RTKey.
+RTKey authentication API.
 """
 
 from __future__ import annotations
 
-from datetime import datetime
-from typing import Any
+from datetime import UTC, datetime
 
-from .client import RTKeyApiClient
-from . import endpoints
+import jwt
+
+from ..const import (
+    API_URL,
+    AUTH_URL,
+)
 from ..exceptions import RTKeyInvalidResponse
-from ..models import User
+from .client import RTKeyApiClient
 
 
 class RTKeyAuthApi(RTKeyApiClient):
     """Authentication API."""
 
-    async def send_code(self, phone: str) -> str:
+    async def send_code(
+        self,
+        phone: str,
+    ) -> str:
         """Request SMS code."""
 
-        response = await self.post(
-            endpoints.SEND_CODE,
+        result = await self.post(
+            f"{AUTH_URL}/identity/api/v1/authorization/send_code",
             json={
                 "phoneNumber": phone,
             },
             auth=False,
         )
-
         try:
-            return response["data"]["codeId"]
+            return result["data"]["codeId"]
         except KeyError as err:
-            raise RTKeyInvalidResponse(
-                "codeId not found in response"
-            ) from err
+            raise RTKeyInvalidResponse() from err
 
     async def login(
         self,
@@ -41,8 +44,8 @@ class RTKeyAuthApi(RTKeyApiClient):
     ) -> str:
         """Login using SMS code."""
 
-        response = await self.post(
-            endpoints.LOGIN,
+        result = await self.post(
+            f"{AUTH_URL}/identity/api/v1/authorization/login",
             json={
                 "code": code,
                 "codeId": code_id,
@@ -51,36 +54,55 @@ class RTKeyAuthApi(RTKeyApiClient):
         )
 
         try:
-            token = response["data"]["accessToken"]
-
-            expires = response["data"].get("expiredAt")
-
-            expires_at = (
-                datetime.fromisoformat(
-                    expires.replace("Z", "+00:00")
-                )
-                if expires
-                else None
-            )
-
-            self._auth.update(
-                token=token,
-                expires_at=expires_at,
-            )
-
-            return token
-
+            token = result["data"]["accessToken"]
         except KeyError as err:
-            raise RTKeyInvalidResponse(
-                "Invalid login response"
-            ) from err
+            raise RTKeyInvalidResponse() from err
 
-async def current_user(self) -> User:
+        expires_at = None
 
-    response = await self.get(
-        endpoints.CURRENT_USER,
-    )
+        try:
+            payload = jwt.decode(
+                token,
+                options={"verify_signature": False},
+                algorithms=["RS256"],
+            )
 
-    return User.from_api(
-        response["data"]
-    )
+            if "exp" in payload:
+                expires_at = datetime.fromtimestamp(
+                    payload["exp"],
+                    UTC,
+                )
+
+        except Exception:
+            pass
+
+        self._auth.update(
+            token=token,
+            expires_at=expires_at,
+        )
+        return token
+
+    async def current_user(self) -> dict:
+        """Return current user."""
+
+        result = await self.get(
+            f"{API_URL}/api/v3/app/users/current",
+        )
+
+        try:
+            return result["data"]
+        except KeyError as err:
+            raise RTKeyInvalidResponse() from err
+
+    async def authenticate(
+        self,
+        phone: str,
+        code: str,
+        code_id: str,
+    ) -> dict:
+        """Authenticate user."""
+
+        await self.send_code(phone)
+        await self.login(code, code_id)
+
+        return await self.current_user()

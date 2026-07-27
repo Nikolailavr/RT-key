@@ -1,35 +1,46 @@
 """
-Intercom API.
+RTKey intercom API.
 """
 
 from __future__ import annotations
 
-from .client import RTKeyApiClient
-from . import endpoints
-
+from ..const import API_URL
 from ..exceptions import RTKeyInvalidResponse
 from ..models import Intercom
+from .client import RTKeyApiClient
 
 
 class RTKeyIntercomApi(RTKeyApiClient):
     """Intercom API."""
 
     async def get_intercoms(self) -> list[Intercom]:
-        """Return all intercoms."""
+        """Return intercom list."""
 
-        response = await self.get(endpoints.INTERCOMS)
+        result = await self.get(
+            f"{API_URL}/api/v2/app/devices/intercom",
+        )
 
         try:
-            items = response["data"]["items"]
+            items = result["data"]["items"]
         except KeyError as err:
-            raise RTKeyInvalidResponse(
-                "Invalid intercom response"
-            ) from err
+            raise RTKeyInvalidResponse() from err
 
         return [
-            Intercom.from_api(item)
+            Intercom.from_dict(item)
             for item in items
         ]
+
+    async def get_intercom(
+        self,
+        device_id: int,
+    ) -> Intercom | None:
+        """Return single intercom."""
+
+        for intercom in await self.get_intercoms():
+            if intercom.id == device_id:
+                return intercom
+
+        return None
 
     async def open_door(
         self,
@@ -38,7 +49,5 @@ class RTKeyIntercomApi(RTKeyApiClient):
         """Open intercom door."""
 
         await self.post(
-            endpoints.OPEN_DOOR.format(
-                device_id=device_id,
-            )
+            f"{API_URL}/api/v2/app/devices/{device_id}/open",
         )

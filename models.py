@@ -49,6 +49,19 @@ class Intercom:
             online=data.get("online", True),
         )
 
+    @classmethod
+    def from_dict(
+        cls,
+        data: dict,
+    ) -> "Intercom":
+        return cls(
+            id=data["id"],
+            name=data["name"],
+            address=data.get("address", ""),
+            camera_id=data.get("cameraId"),
+            online=data.get("online", True),
+        )
+
 
 @dataclass(slots=True, frozen=True)
 class Camera:
@@ -78,6 +91,18 @@ class Camera:
             stream_token=data.get("streamToken"),
             cdn_token=data.get("cdnToken"),
             online=data.get("online", True),
+        )
+
+    @classmethod
+    def from_dict(
+        cls,
+        data: dict,
+    ) -> "Camera":
+        return cls(
+            camera_id=data["cameraId"],
+            online=data.get("online", True),
+            stream_url=data.get("streamUrl"),
+            screenshot_url=data.get("screenshotPreciseUrlTemplate"),
         )
 
 

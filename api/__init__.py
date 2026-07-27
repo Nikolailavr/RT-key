@@ -12,13 +12,13 @@ from .intercom import RTKeyIntercomApi
 from .media import RTKeyMediaApi
 from .session import RTKeySession
 
+__all__ = [
+    "RTKeyApi",
+    "RTKeySession",
+]
 
-class RTKeyApi(
-    RTKeyAuthApi,
-    RTKeyCameraApi,
-    RTKeyIntercomApi,
-    RTKeyMediaApi,
-):
+
+class RTKeyApi:
     """Main RTKey API."""
 
     def __init__(
@@ -26,8 +26,26 @@ class RTKeyApi(
         session: aiohttp.ClientSession,
         auth: RTKeySession,
     ) -> None:
+        """Initialize API."""
 
-        super().__init__(
+        self.session = auth
+
+        self.auth = RTKeyAuthApi(
+            session=session,
+            auth=auth,
+        )
+
+        self.camera = RTKeyCameraApi(
+            session=session,
+            auth=auth,
+        )
+
+        self.intercom = RTKeyIntercomApi(
+            session=session,
+            auth=auth,
+        )
+
+        self.media = RTKeyMediaApi(
             session=session,
             auth=auth,
         )

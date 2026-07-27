@@ -1,15 +1,14 @@
 {
   "domain": "rtkey",
-  "name": "Ростелеком Ключ",
-  "version": "1.0.0",
-  "documentation": "https://github.com/YOUR_GITHUB/rtkey",
-  "issue_tracker": "https://github.com/YOUR_GITHUB/rtkey/issues",
-  "integration_type": "service",
+  "name": "RT Key",
+  "version": "0.1.0",
   "config_flow": true,
+  "documentation": "https://github.com/Nikolailavr/RT-key",
+  "issue_tracker": "https://github.com/Nikolailavr/RT-key/issues",
   "iot_class": "cloud_polling",
-  "requirements": [],
+  "requirements": ["PyJWT>=2.8.0"],
   "codeowners": [
-    "@YOUR_GITHUB"
+    "@Nikolailavr"
   ],
   "loggers": [
     "custom_components.rtkey"

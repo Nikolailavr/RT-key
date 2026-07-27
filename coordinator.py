@@ -62,11 +62,8 @@ class RTKeyCoordinator(
     ) -> list[RTKeyDevice]:
 
         try:
-
-            intercoms = await self.api.get_intercoms()
-
-            cameras = await self.api.get_cameras()
-
+            intercoms = await self.api.intercom.get_intercoms()
+            cameras = await self.api.camera.get_cameras()
         except Exception as err:
 
             raise UpdateFailed(
