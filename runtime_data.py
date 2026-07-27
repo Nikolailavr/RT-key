@@ -12,7 +12,7 @@ from .coordinator import RTKeyCoordinator
 
 @dataclass(slots=True)
 class RTKeyRuntimeData:
-    """Runtime data."""
+    """Класс для хранения объектов интеграции в памяти."""
 
     api: RTKeyApi
     coordinator: RTKeyCoordinator
