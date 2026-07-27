@@ -1,0 +1,17 @@
+{
+  "domain": "rtkey",
+  "name": "Ростелеком Ключ",
+  "version": "1.0.0",
+  "documentation": "https://github.com/YOUR_GITHUB/rtkey",
+  "issue_tracker": "https://github.com/YOUR_GITHUB/rtkey/issues",
+  "integration_type": "service",
+  "config_flow": true,
+  "iot_class": "cloud_polling",
+  "requirements": [],
+  "codeowners": [
+    "@YOUR_GITHUB"
+  ],
+  "loggers": [
+    "custom_components.rtkey"
+  ]
+}
