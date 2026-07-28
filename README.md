@@ -1,7 +1,7 @@
 # Ростелеком Ключ (RT-Key) — Custom Component for Home Assistant
 
 [![HACS Validation](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/default)
-[![Home Assistant](https://img.shields.io/badge/Home--Assistant-2023.8%2B-blue.svg)](https://www.home-assistant.io/)
+[![Home Assistant](https://img.shields.io/badge/Home--Assistant-2026.7%2B-blue.svg)](https://www.home-assistant.io/)
 
 Кастомная интеграция **Ростелеком Ключ** (`key.rt.ru`) для **Home Assistant**, распространяемая через **HACS**. 
 
