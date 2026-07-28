@@ -1,0 +1,58 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Rostelecom Key Integration",
+        "description": "Choose authorization method for Rostelecom Key (key.rt.ru).",
+        "data": {
+          "auth_method": "Auth Method",
+          "phone": "Phone Number"
+        }
+      },
+      "password": {
+        "title": "Password Authorization",
+        "description": "Enter your phone number and password for Rostelecom Key account.",
+        "data": {
+          "phone": "Phone Number (e.g. +79991234567)",
+          "password": "Password"
+        }
+      },
+      "sms": {
+        "title": "SMS Verification",
+        "description": "Enter the 4-digit code sent to {phone}.",
+        "data": {
+          "code": "SMS Code"
+        }
+      },
+      "token": {
+        "title": "Direct Token Auth",
+        "description": "Enter active Bearer Token from key.rt.ru API.",
+        "data": {
+          "token": "Access Token",
+          "refresh_token": "Refresh Token (optional)",
+          "phone": "Phone Number (reference)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to key.rt.ru. Check connection.",
+      "invalid_auth": "Invalid authentication token.",
+      "invalid_code": "Incorrect SMS verification code.",
+      "invalid_phone": "Invalid phone format.",
+      "unknown": "Unexpected error during setup."
+    },
+    "abort": {
+      "already_configured": "This Rostelecom Key account is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Rostelecom Key Options",
+        "data": {
+          "scan_interval": "Data polling interval (seconds)"
+        }
+      }
+    }
+  }
+}

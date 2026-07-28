@@ -1,0 +1,60 @@
+create_guest_code:
+  name: Создать гостевой код
+  description: Сгенерировать временный PIN-код для входа через домофон или шлагбаум Ростелеком Ключ.
+  fields:
+    device_id:
+      name: ID Устройства / Домофона
+      description: Уникальный идентификатор домофона или шлагбаума из Home Assistant.
+      required: true
+      example: "intercom_102"
+      selector:
+        text:
+    duration_hours:
+      name: Срок действия (в часах)
+      description: Время работы PIN-кода (по умолчанию 24 часа).
+      required: false
+      default: 24
+      example: 12
+      selector:
+        number:
+          min: 1
+          max: 720
+          unit_of_measurement: h
+    max_uses:
+      name: Макс. количество проходов
+      description: Лимит срабатываний PIN-кода (по умолчанию 1 раз).
+      required: false
+      default: 1
+      example: 5
+      selector:
+        number:
+          min: 1
+          max: 100
+    description:
+      name: Примечание / Метка
+      description: Назначение кода (например "Курьер Ozon", "Сантехник").
+      required: false
+      default: "HA Guest PIN"
+      example: "Доставка еды"
+      selector:
+        text:
+
+open_door:
+  name: Открыть дверь домофона
+  description: Отправить команду на немедленное открытие двери домофона Ростелеком Ключ.
+  fields:
+    device_id:
+      name: ID Домофона
+      description: Идентификатор домофона в сервисе.
+      required: true
+      example: "intercom_102"
+
+open_barrier:
+  name: Открыть шлагбаум / ворота
+  description: Отправить команду открытия шлагбаума во дворе.
+  fields:
+    device_id:
+      name: ID Шлагбаума
+      description: Идентификатор шлагбаума в сервисе.
+      required: true
+      example: "barrier_201"
