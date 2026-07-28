@@ -1,3 +1,4 @@
+# <img src="brand\rt-key.png" alt="Ростелеком Ключ" width="100"> rt-key
 # Ростелеком Ключ (RT-Key) — Custom Component for Home Assistant
 
 [![HACS Validation](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/default)
