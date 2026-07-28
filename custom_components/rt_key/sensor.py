@@ -22,12 +22,12 @@ async def async_setup_entry(
     entities = []
 
     # Guest Code count sensor
-    entities.append(RostelecomKeyActiveGuestCodesSensor(coordinator, entry.entry_id))
+    # entities.append(RostelecomKeyActiveGuestCodesSensor(coordinator, entry.entry_id))
 
     # Last opening log sensor per intercom
-    intercoms = coordinator.data.get("intercoms", [])
-    for intercom in intercoms:
-        entities.append(RostelecomKeyLastOpenedSensor(coordinator, intercom))
+    # intercoms = coordinator.data.get("intercoms", [])
+    # for intercom in intercoms:
+    #     entities.append(RostelecomKeyLastOpenedSensor(coordinator, intercom))
 
     async_add_entities(entities)
 
