@@ -106,12 +106,8 @@ class RostelecomKeyIntercomCamera(CoordinatorEntity[RostelecomKeyDataUpdateCoord
     async def async_camera_image(
         self, width: Optional[int] = None, height: Optional[int] = None
     ) -> Optional[bytes]:
-        """Return JPEG snapshot from intercom camera."""
-        try:
-            return await self.api.async_get_camera_snapshot(self._camera_id)
-        except Exception as err:
-            LOGGER.warning("Failed to fetch image for intercom camera %s: %s", self._camera_id, err)
-            return None
+        """Disable static image snapshot to force direct real-time video streaming."""
+        return None
 
     async def stream_source(self) -> Optional[str]:
         """Return RTSP/HLS/HTTPS stream source URL for intercom video."""
@@ -201,12 +197,8 @@ class RostelecomKeyCctvCamera(CoordinatorEntity[RostelecomKeyDataUpdateCoordinat
     async def async_camera_image(
         self, width: Optional[int] = None, height: Optional[int] = None
     ) -> Optional[bytes]:
-        """Fetch snapshot image."""
-        try:
-            return await self.api.async_get_camera_snapshot(self._camera_id)
-        except Exception as err:
-            LOGGER.warning("Failed to fetch snapshot for camera %s: %s", self._camera_id, err)
-            return None
+        """Disable static image snapshot to force direct real-time video streaming."""
+        return None
 
     async def stream_source(self) -> Optional[str]:
         """Fetch stream source URL."""

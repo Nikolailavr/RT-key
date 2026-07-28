@@ -6,7 +6,7 @@ import aiohttp
 
 from ..const import API_CAMERAS_URL, API_CAMERA_VIDEO_DATA_LIST_URL, API_VC_CAMERAS_URL, LOGGER
 from .base import BaseService
-from .exceptions import RostelecomKeyApiError, RostelecomKeyNetworkError
+from .exceptions import RostelecomKeyApiError
 
 
 class CameraService(BaseService):
