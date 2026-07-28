@@ -132,7 +132,6 @@ class RostelecomKeyIntercomCamera(CoordinatorEntity[RostelecomKeyDataUpdateCoord
         }
         if self._stream_url:
             attrs["stream_url"] = self._stream_url
-            attrs["live_stream_url"] = self._stream_url
         return attrs
 
 
